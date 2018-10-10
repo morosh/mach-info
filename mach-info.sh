@@ -20,6 +20,7 @@ run () {
 	ram
 	disk
 	network
+	os
 	etc
 }
 
@@ -46,6 +47,22 @@ network () {
 	hostname -i > $log_path/hostname_i.txt
 }
 
+os () {
+	log "uname"
+	uname -a > $log_path/uname.txt
+
+	if [ -e "/etc/lsb-release" ]; then
+		log "lsb-release"		
+		cat /etc/lsb-release > $log_path/lsb-release.txt
+	fi
+	
+	log  "ps"
+	ps aux > $log_path/ps.txt
+
+	log "pstree"
+	pstree > $log_path/pstree.txt
+}
+
 etc () {
 	log "hostname"
 	hostname > $log_path/hostname.txt
@@ -53,11 +70,6 @@ etc () {
 	log "date"
 	date > $log_path/date.txt
 
-	log  "ps"
-	ps aux > $log_path/ps.txt
-
-	log "pstree"
-	pstree > $log_path/pstree.txt
 
 	log "dmesg"
 	dmesg > $log_path/dmesg.txt
@@ -65,8 +77,6 @@ etc () {
 	log "whoami"
 	whoami > $log_path/whoami.txt
 
-	log "uname"
-	uname -a > $log_path/uname.txt
 }
 
 init
